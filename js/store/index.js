@@ -1,8 +1,10 @@
 import {createStore, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import rootReducer from '../reducer';
 import {middleware} from '../navigator/AppNavigator';
 
+/*
 const logger = store => next => action => {
   if (typeof action === 'function') {
     console.log('dispatching a function');
@@ -12,6 +14,7 @@ const logger = store => next => action => {
   const result = next(action);
   console.log('nextState ', store.getState());
 };
+*/
 
 const middlewares = [
   middleware
