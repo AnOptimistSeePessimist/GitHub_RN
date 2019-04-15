@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, Text, View, RefreshControl} from 'react-native';
+import {FlatList, StyleSheet, ActivityIndicator, View, RefreshControl, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {createMaterialTopTabNavigator} from 'react-navigation';
+import Toast from 'react-native-easy-toast';
 import actions from '../action';
 import PopularItem from '../common/PopularItem';
-import NavigationUtil from "../navigator/NavigationUtil";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -16,12 +16,13 @@ export default class PopularPage extends Component<Props> {
   constructor(props) {
     super(props);
     this.tabNames = [
-      // 'Java',
-      // 'Android',
-      // 'iOS',
-      // 'React',
+      'Java',
+      /*'Android',
+      'iOS',
+      'React',
       'React Native',
-      // 'PHP'
+      'PHP'
+      */
     ];
   }
 
@@ -63,6 +64,8 @@ export default class PopularPage extends Component<Props> {
   }
 }
 
+const pageSize = 10; // 设为常量，防止修改
+
 class PopularTab extends Component {
 
   constructor(props) {
@@ -75,10 +78,38 @@ class PopularTab extends Component {
     this.loadData();
   }
 
-  loadData() {
-    const {onLoadPopularData} = this.props;
+  loadData(loadMore) {
+    const {onRefreshPopular, onLoadMorePopular} = this.props;
+    const store = this._store();
     const url = this.genFetchUrl(this.storeName);
-    onLoadPopularData(this.storeName, url);
+    if (loadMore) {
+      onLoadMorePopular(this.storeName, ++store.pageIndex, pageSize, store.items, (callback) => {
+        this.toast.show('没有更多了!');
+      });
+    } else {
+      onRefreshPopular(this.storeName, url, pageSize);
+    }
+
+  }
+
+  /**
+   * 获取与当前页面有关的数据
+   * @return {*}
+   * @private
+   */
+  _store() {
+    const {popular} = this.props;
+    let store = popular[this.storeName];
+    if (!store) {
+      store = {
+        items: [],
+        isLoading: false,
+        projectModes: [], // 要显示的数据
+        hideLoadingMore: true, // 默认隐藏加载更多
+
+      };
+    }
+    return store;
   }
 
   genFetchUrl(key) {
@@ -96,20 +127,24 @@ class PopularTab extends Component {
     )
   }
 
+  genIndicator() {
+    console.log('hideLoadingMore: ', this._store().hideLoadingMore);
+    return (
+      this._store().hideLoadingMore ? null :
+        <View style={styles.indicatorContainer}>
+          <ActivityIndicator style={styles.indicator}/>
+          <Text>正在加载更多</Text>
+        </View>
+    )
+  }
+
   render() {
-    let {popular} = this.props;
-    let store = popular[this.storeName];
-    if (!store) {
-      store = {
-        items: [],
-        isLoading: false
-      };
-    }
+    let store = this._store();
     return (
       <View style={styles.container}>
         <FlatList
           renderItem={data => this.renderItem(data)}
-          data={store.items}
+          data={store.projectModes}
           keyExtractor={(item) => {
             return item.id + '';
           }}
@@ -122,6 +157,15 @@ class PopularTab extends Component {
               onRefresh={() => this.loadData()}
             />
           }
+          ListFooterComponent={() => this.genIndicator()}
+          onEndReached={() => {
+            this.loadData(true);
+          }}
+          // onEndReachedThreshold={0.5}
+        />
+        <Toast
+          ref={toast => this.toast = toast}
+          position={'center'}
         />
       </View>
     )
@@ -133,7 +177,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLoadPopularData: (storeName, url) => dispatch(actions.onLoadPopularData(storeName, url))
+  onRefreshPopular: (storeName, url, pageSize) => dispatch(actions.onRefreshPopular(storeName, url, pageSize)),
+  onLoadMorePopular: (storeName, pageIndex, pageSize, items, callback) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, callback))
 });
 
 const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab);
@@ -164,5 +209,12 @@ const styles = StyleSheet.create({
   },
   item: {
     borderWidth: 2
+  },
+  indicatorContainer: {
+    alignItems: 'center'
+  },
+  indicator: {
+    color: 'red',
+    margin: 10
   }
 });

@@ -1,5 +1,5 @@
 import {onThemeChange} from './theme';
-import {onLoadPopularData} from './popular';
+import {onRefreshPopular, onLoadMorePopular} from './popular';
 
 /**
  *
@@ -9,5 +9,6 @@ import {onLoadPopularData} from './popular';
  */
 export default {
   onThemeChange,
-  onLoadPopularData
+  onRefreshPopular,
+  onLoadMorePopular
 };
