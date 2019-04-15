@@ -17,7 +17,8 @@ const logger = store => next => action => {
 */
 
 const middlewares = [
-  middleware
+  middleware,
+  thunk
 ];
 
 if (__DEV__) {
