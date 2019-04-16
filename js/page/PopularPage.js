@@ -17,12 +17,11 @@ export default class PopularPage extends Component<Props> {
     super(props);
     this.tabNames = [
       'Java',
-      /*'Android',
+      'Android',
       'iOS',
       'React',
       'React Native',
       'PHP'
-      */
     ];
   }
 
@@ -128,7 +127,7 @@ class PopularTab extends Component {
   }
 
   genIndicator() {
-    console.log('hideLoadingMore: ', this._store().hideLoadingMore);
+    // console.log('hideLoadingMore: ', this._store().hideLoadingMore);
     return (
       this._store().hideLoadingMore ? null :
         <View style={styles.indicatorContainer}>
@@ -159,9 +158,18 @@ class PopularTab extends Component {
           }
           ListFooterComponent={() => this.genIndicator()}
           onEndReached={() => {
-            this.loadData(true);
+            setTimeout(() => {
+              if (this.canLoadMore) {
+                console.log('----onEndReached----');
+                this.loadData(true);
+                this.canLoadMore = false;
+              }
+            }, 100);
           }}
-          // onEndReachedThreshold={0.5}
+          onEndReachedThreshold={0.5}
+          onMomentumScrollBegin={() => {
+            this.canLoadMore = true;
+          }}
         />
         <Toast
           ref={toast => this.toast = toast}

@@ -39,6 +39,7 @@ export default function onAction(state = defaultState, action) {
         ...state,
         [action.storeName]: {
           ...state[action.storeName],
+          hideLoadingMore: true,
           isLoading: true
         }
       };
@@ -56,7 +57,7 @@ export default function onAction(state = defaultState, action) {
         [action.storeName]: {
           ...state[action.storeName],
           projectModes: action.projectModes,
-          hideLoadingMore: false,
+          hideLoadingMore: true,
           pageIndex: action.pageIndex
         }
       };

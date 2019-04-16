@@ -12,7 +12,7 @@ import DataStore from '../../expand/dao/DataStore';
  */
 
 export const onRefreshPopular = (storeName, url, pageSize) => (dispatch, getState, extraArgument) => {
-  dispatch({type: Types.POPULAR_REFRESH, storeName});
+  dispatch({type: Types.POPULAR_REFRESH, storeName, hideLoadingMore: true});
   let dataStore = new DataStore();
   dataStore.fetchData(url) // 异步 action 与数据流
     .then((data) => {
@@ -37,6 +37,7 @@ export const onLoadMorePopular = (storeName, pageIndex, pageSize, dataArray = []
       dispatch({
         type: Types.POPULAR_LOAD_MORE_FAIL,
         error: 'no more',
+        storeName,
         pageIndex: --pageIndex,
         projectModes: dataArray
       });
@@ -47,6 +48,7 @@ export const onLoadMorePopular = (storeName, pageIndex, pageSize, dataArray = []
         type: Types.POPULAR_REFRESH_SUCCESS,
         storeName,
         pageIndex,
+        items: dataArray,
         projectModes: dataArray.slice(0, max)
       });
     }
@@ -55,8 +57,8 @@ export const onLoadMorePopular = (storeName, pageIndex, pageSize, dataArray = []
 
 function handleData(dispatch, storeName, data, pageSize) {
   let fixItems = [];
-  if (data && data.data && data.data.time) {
-    fixItems = data.data.time;
+  if (data && data.data && data.data.items) {
+    fixItems = data.data.items;
   }
   dispatch({
     type: Types.POPULAR_REFRESH_SUCCESS,
