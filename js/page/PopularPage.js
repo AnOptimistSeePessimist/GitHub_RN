@@ -5,6 +5,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation';
 import Toast from 'react-native-easy-toast';
 import actions from '../action';
 import PopularItem from '../common/PopularItem';
+import NavigationBar from "../common/NavigationBar";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars';
@@ -59,6 +60,7 @@ export default class PopularPage extends Component<Props> {
     );
     return (
       <View style={{flex: 1, marginTop: 30}}>
+        <NavigationBar title={'最新'} style={{backgroundColor: '#678'}}/>
         <TabNavigator/>
       </View>
     )

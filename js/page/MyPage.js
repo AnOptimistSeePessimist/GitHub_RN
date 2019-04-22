@@ -3,14 +3,18 @@ import {Button, StyleSheet, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import actions from '../action';
 import NavigationUtil from "../navigator/NavigationUtil";
+import NavigationBar from "../common/NavigationBar";
 
 type Props = {};
+
+
 
 class MyPage extends Component<Props> {
   render() {
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {marginTop: 30}]}>
+        <NavigationBar title={'我的'} style={{backgroundColor: '#678'}}/>
         <Text style={styles.welcome}>MyPage</Text>
         <Button
           title={'改变主题色'}
@@ -60,8 +64,8 @@ export default connect(mapStateToProps, mapDispatchtoProps)(MyPage);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {

@@ -5,6 +5,7 @@ import {createMaterialTopTabNavigator} from 'react-navigation';
 import Toast from 'react-native-easy-toast';
 import actions from '../action';
 import PopularItem from '../common/PopularItem';
+import NavigationBar from "../common/NavigationBar";
 
 const URL = 'https://github.com/trending/';
 const QUERY_STR = '?since=daily';
@@ -59,6 +60,7 @@ export default class TrendingPage extends Component<Props> {
     );
     return (
       <View style={{flex: 1, marginTop: 30}}>
+        <NavigationBar title={'趋势'} style={{backgroundColor: '#678'}}/>
         <TabNavigator/>
       </View>
     )
@@ -148,7 +150,7 @@ class TrendingTab extends Component {
           renderItem={data => this.renderItem(data)}
           data={store.projectModes}
           keyExtractor={(item) => {
-            return item.id + '';
+            return (item.id || item.fullName) + '';
           }}
           refreshControl={
             <RefreshControl
