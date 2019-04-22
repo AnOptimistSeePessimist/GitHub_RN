@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from '../reducer';
 import {middleware} from '../navigator/AppNavigator';
+import DataStore from '../expand/dao/DataStore';
 
 /*
 const logger = store => next => action => {
@@ -18,7 +19,7 @@ const logger = store => next => action => {
 
 const middlewares = [
   middleware,
-  thunk
+  thunk.withExtraArgument({api: new DataStore()})
 ];
 
 if (__DEV__) {

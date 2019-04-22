@@ -17,11 +17,13 @@ export default class PopularPage extends Component<Props> {
     super(props);
     this.tabNames = [
       'Java',
+      /*
       'Android',
       'iOS',
       'React',
       'React Native',
       'PHP'
+      */
     ];
   }
 
