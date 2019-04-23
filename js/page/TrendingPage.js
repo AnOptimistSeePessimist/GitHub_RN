@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, ActivityIndicator, View, RefreshControl, Text} from 'react-native';
+import {FlatList, StyleSheet, ActivityIndicator, View, RefreshControl, Text, DeviceInfo} from 'react-native';
 import {connect} from 'react-redux';
 import {createMaterialTopTabNavigator} from 'react-navigation';
 import Toast from 'react-native-easy-toast';
 import actions from '../action';
-import PopularItem from '../common/PopularItem';
+import TrendingItem from '../common/TrendingItem';
 import NavigationBar from "../common/NavigationBar";
 
 const URL = 'https://github.com/trending/';
@@ -18,13 +18,11 @@ export default class TrendingPage extends Component<Props> {
     super(props);
     this.tabNames = [
       'All',
-      /*
       'Unknown',
       'C',
       'C#',
       'PHP',
       'JavaScript'
-      */
     ];
   }
 
@@ -51,7 +49,8 @@ export default class TrendingPage extends Component<Props> {
           upperCaseLabel: false,
           scrollEnabled: true,
           style: {
-            backgroundColor: '#678'
+            backgroundColor: '#678',
+            height: 50
           },
           indicatorStyle: styles.indicatorStyle,
           labelStyle: styles.labelStyle
@@ -59,7 +58,7 @@ export default class TrendingPage extends Component<Props> {
       }
     );
     return (
-      <View style={{flex: 1, marginTop: 30}}>
+      <View style={{flex: 1, marginTop: DeviceInfo.isIphoneX_deprecated ? 30 : 0}}>
         <NavigationBar title={'趋势'} style={{backgroundColor: '#678'}}/>
         <TabNavigator/>
       </View>
@@ -122,7 +121,7 @@ class TrendingTab extends Component {
 
   renderItem(data) {
     return (
-      <PopularItem
+      <TrendingItem
         item={data.item}
         onSelect={() => {
 
@@ -210,7 +209,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   tabStyle: {
-    minWidth: 50
+    // minWidth: 50
   },
   indicatorStyle: {
     height: 3,
