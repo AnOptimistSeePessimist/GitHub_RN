@@ -8,7 +8,7 @@ import MyPage from '../page/MyPage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { BottomTabBar } from 'react-navigation-tabs';
+import {BottomTabBar} from 'react-navigation-tabs';
 import {connect} from 'react-redux';
 
 const TABS = {
@@ -68,6 +68,7 @@ const TABS = {
 };
 
 type Props = {};
+
 class DynamicTabNavigator extends Component<Props> {
 
   _tabNavigator() {
@@ -75,9 +76,9 @@ class DynamicTabNavigator extends Component<Props> {
       return this.Tabs;
     }
     const {PopularPage, MyPage, TrendingPage, FavoritePage} = TABS;
-    PopularPage.navigationOptions.tabBarLabel = '最新';
+    // PopularPage.navigationOptions.tabBarLabel = '最新';
     // 根据需要定制显示的 tab
-    const tabs = {PopularPage, MyPage, TrendingPage, FavoritePage};
+    const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage};
     return this.Tabs = createBottomTabNavigator(
       tabs,
       {
