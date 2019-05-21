@@ -44,7 +44,6 @@ export function handleData(actionType, dispatch, storeName, data, pageSize, favo
 export async function _projectModels(showItems, favoriteDao, callback) {
   let keys = [];
   try {
-    debugger;
     keys = await favoriteDao.getFavoriteKeys();
   } catch (e) {
     console.log(e);

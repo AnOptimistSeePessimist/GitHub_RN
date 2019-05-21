@@ -14,7 +14,7 @@ export default class PopularItem extends BaseItem {
 
     return (
       <TouchableOpacity
-        onPress={onSelect}
+        onPress={() => this.onItemClick()}
       >
         <View
           style={styles.container}
