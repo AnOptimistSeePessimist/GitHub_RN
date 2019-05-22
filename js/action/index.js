@@ -1,6 +1,7 @@
 import {onThemeChange} from './theme';
-import {onRefreshPopular, onLoadMorePopular} from './popular';
+import {onRefreshPopular, onLoadMorePopular, onFlushPopularFavorite} from './popular';
 import {onRefreshTrending, onLoadMoreTrending} from './trending';
+import {onLoadFavoriteData} from './favorite';
 
 /**
  *
@@ -13,5 +14,7 @@ export default {
   onRefreshPopular,
   onLoadMorePopular,
   onRefreshTrending,
-  onLoadMoreTrending
+  onLoadMoreTrending,
+  onLoadFavoriteData,
+  onFlushPopularFavorite
 };

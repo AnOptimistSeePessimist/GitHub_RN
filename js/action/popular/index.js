@@ -67,4 +67,39 @@ export const onLoadMorePopular = (storeName, pageIndex, pageSize, dataArray = []
 
     }
   }, 500);
+};
+
+export function onFlushPopularFavorite(storeName, pageIndex, pageSize, dataArray = [], favoriteDao) {
+  return dispatch => {
+    let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
+    _projectModels(dataArray.slice(0, max), favoriteDao, data => {
+      dispatch({
+        type: Types.FLUSH_POPULAR_FAVORITE,
+        storeName,
+        pageIndex,
+        items: dataArray,
+        projectModels: data
+      });
+    });
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

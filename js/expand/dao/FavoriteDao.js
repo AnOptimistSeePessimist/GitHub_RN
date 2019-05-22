@@ -94,7 +94,7 @@ export default class FavoriteDao {
       this.getFavoriteKeys().then((keys) => {
         let items = [];
         if (keys) {
-          AsyncStorage.multiGet(key, (err, stores) => {
+          AsyncStorage.multiGet(keys, (err, stores) => {
             try {
               stores.map((result, i, store) => {
                 let key = store[i][0];
@@ -118,7 +118,7 @@ export default class FavoriteDao {
     });
   }
 
-  
+
 
 
 }
