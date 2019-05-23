@@ -14,7 +14,17 @@ const THEME_COLOR = '#678';
 class MyPage extends Component {
 
   onClick(menu) {
-
+    let RouteName, params = {};
+    switch (menu) {
+      case MORE_MENU.Tutorial:
+        RouteName = 'WebViewPage';
+        params.title = '教程';
+        params.url = 'https://github.com/AnOptimistSeePessimist/react-native';
+        break;
+    }
+    if (RouteName) {
+      NavigationUtil.goPage(params, RouteName);
+    }
   }
 
   getItem(menu) {

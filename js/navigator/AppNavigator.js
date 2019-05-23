@@ -12,6 +12,8 @@ import AsyncStorageDemoPage from '../page/AsyncStorageDemoPage';
 import DataStoreDemoPage from '../page/DataStoreDemoPage';
 import {connect, Provider} from 'react-redux';
 import {createReactNavigationReduxMiddleware, reduxifyNavigator} from 'react-navigation-redux-helpers';
+import WebViewPage from "../page/WebViewPage";
+
 export const rootCom = 'Init';
 
 const InitNavigator = createStackNavigator({
@@ -36,8 +38,11 @@ const MainNavigator = createStackNavigator({
       header: null
     }
   },
-  FetchDemoPage: {
-    screen: FetchDemoPage
+  WebViewPage: {
+    screen: WebViewPage,
+    navigationOptions: {
+      header: null
+    }
   },
   AsyncStorageDemoPage: {
     screen: AsyncStorageDemoPage
