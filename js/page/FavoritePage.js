@@ -60,7 +60,7 @@ export default class FavoritePage extends Component<Props> {
 
     return (
       <View style={{flex: 1, marginTop: DeviceInfo.isIphoneX_deprecated ? 30 : 0}}>
-        <NavigationBar title={'最新'} style={{backgroundColor: '#678'}}/>
+        <NavigationBar title={'收藏'} style={{backgroundColor: '#678'}}/>
         <TabNavigator/>
       </View>
     )
@@ -116,7 +116,7 @@ class FavoriteTab extends Component {
 
   onFavorite(item, isFavorite) {
     FavoriteUtil.onFavorite(this.favoriteDao, item, isFavorite, this.props.flag);
-    if (this.storeName === FLAG_STORAGE) {
+    if (this.storeName === FLAG_STORAGE.flag_popular) {
       EventBus.getInstance().fireEvent(EventTypes.favorite_changed_popular);
     } else {
       EventBus.getInstance().fireEvent(EventTypes.favorite_changed_trending);

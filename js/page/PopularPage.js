@@ -97,7 +97,7 @@ class PopularTab extends Component {
       if (data.to === 0 && this.isFavoriteChanged) {
         this.loadData(null, true);
       }
-    })
+    });
   }
 
   componentWillUnmount() {
